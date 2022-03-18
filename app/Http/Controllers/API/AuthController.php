@@ -17,19 +17,23 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         try {
-            if (! $token = auth()->attempt($request->validated())) {
+            $user = User::where('email', $request['username'])
+                ->orWhere('username', $request['username'])
+                ->first();
+
+            if (!$user || !Hash::check($request->password, $user->password)) {
                 return response()->json(['error' => 'Invalid Credentials'], 401);
             }
         } catch(Exception $e) {
-            $this->incrementLoginAttempts($request);
             return response()->json(['error' => 'Could Not Create Token'], 500);
         }
 
-        $token = auth()->user()->createToken('Token')->accessToken;
+        $token = $user->createToken('Token')->plainTextToken;
 
         return response()->json([
-            'access_token' => $token->token,
-        ]);
+            'access_token' => $token,
+            'message' => 'Successfully logged in'
+        ], 200);
     }
 
     public function register(RegisterRequest $request)
@@ -62,6 +66,16 @@ class AuthController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Successfully Registered.',
-        ]);
+        ], 200);
+    }
+
+    public function logout(Request $request)
+    {
+        auth()->user()->tokens()->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Successfully logged out.',
+        ], 200);
     }
 }
