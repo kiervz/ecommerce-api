@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Product\ProductStoreRequest;
-use App\Http\Requests\Product\ProductUpdateRequest;
+use App\Http\Requests\Product\ProductRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Product;
@@ -27,7 +26,7 @@ class ProductController extends Controller
         ], $status_code);
     }
 
-    public function store(ProductStoreRequest $request)
+    public function store(ProductRequest $request)
     {
         $status_code = 200;
         $message = "added successfully";
@@ -67,7 +66,7 @@ class ProductController extends Controller
         ], $status_code);
     }
 
-    public function update(ProductUpdateRequest $request, $id)
+    public function update(ProductRequest $request, $id)
     {
         $status_code = 200;
         $message = "updated successfully";
