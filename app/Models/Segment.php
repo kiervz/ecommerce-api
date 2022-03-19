@@ -11,7 +11,7 @@ class Segment extends Model
 
     protected $fillable = [
         "name",
-        "is_deleted"
+        "deleted_at"
     ];
 
     public function category()

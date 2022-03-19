@@ -16,8 +16,8 @@ class CreateSegmentsTable extends Migration
         Schema::create('segments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('is_deleted')->default(0);
             $table->timestamps();
+            $table->timestamp('deleted_at');
         });
     }
 

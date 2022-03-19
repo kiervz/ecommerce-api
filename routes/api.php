@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ProductController;
+use App\Http\Controllers\API\SegmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,4 +33,5 @@ Route::group(['prefix' => 'auth'], function() {
 
 Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::apiResource('products', ProductController::class);
+    Route::apiResource('segments', SegmentController::class);
 });
