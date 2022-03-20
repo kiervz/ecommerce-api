@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class ProductDetailMaster extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'deleted_at'
+    ];
 }

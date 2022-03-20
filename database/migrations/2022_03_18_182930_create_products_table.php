@@ -28,6 +28,7 @@ class CreateProductsTable extends Migration
             $table->integer('category_id');
             $table->integer('sub_category_id');
             $table->timestamps();
+            $table->timestamps('deleted_at');
         });
     }
 

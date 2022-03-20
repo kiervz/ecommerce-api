@@ -33,7 +33,7 @@ class SegmentController extends Controller
         ], 200);
     }
 
-    public function update(Request $request, $id)
+    public function update(SegmentRequest $request, $id)
     {
         $status_code = 200;
         $message = "updated successfully";
