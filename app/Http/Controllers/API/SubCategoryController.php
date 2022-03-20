@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SubCategory\SubCategoryRequest;
+use App\Http\Requests\SubCategoryRequest;
 use Illuminate\Http\Request;
 use App\Models\SubCategory;
 

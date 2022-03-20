@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\SubCategory;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class SubCategoryRequest extends FormRequest
+class SegmentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,14 @@ class SubCategoryRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->sub_category;
+        $id = $this->segment;
         $method = $this->method();
 
         return [
             'name' => $method == 'PUT' ? [
                 'required',
-                Rule::unique('categories')->ignore($id)
-            ] : 'required|unique:categories,name',
-            'category_id' => $method == 'PUT' ? '' : 'required'
+                Rule::unique('segments')->ignore($id)
+            ] : 'required|unique:segments,name',
         ];
     }
 }
