@@ -6,6 +6,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\SegmentController;
+use App\Http\Controllers\API\SubCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,4 +38,5 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('segment/{id}/categories', [SegmentController::class, 'showCategoriesBySegmentId'])->name('segment.showCategoriesBySegmentId');
     Route::apiResource('segment', SegmentController::class);
     Route::apiResource('category', CategoryController::class);
+    Route::apiResource('sub-category', SubCategoryController::class);
 });

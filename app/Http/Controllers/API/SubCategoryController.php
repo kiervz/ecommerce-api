@@ -3,29 +3,29 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Category\CategoryRequest;
+use App\Http\Requests\SubCategory\SubCategoryRequest;
 use Illuminate\Http\Request;
-use App\Models\Category;
+use App\Models\SubCategory;
 
-class CategoryController extends Controller
+class SubCategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::select('id', 'name')
+        $sub_categories = SubCategory::select('id', 'name', 'category_id')
             ->where('deleted_at', null)
             ->paginate(10);
 
         return response()->json([
-            'message' => 'retrieved successfully',
-            'data' => $categories
+            'message' => 'retrieved succesfully',
+            'data' => $sub_categories
         ], 200);
     }
 
-    public function store(CategoryRequest $request)
+    public function store(SubCategoryRequest $request)
     {
-        Category::create([
+        SubCategory::create([
             'name' => $request['name'],
-            'segment_id' => $request['segment_id']
+            'category_id' => $request['category_id']
         ]);
 
         return response()->json([
@@ -33,23 +33,23 @@ class CategoryController extends Controller
         ], 200);
     }
 
-    public function update(CategoryRequest $request, $id)
+    public function update(SubCategoryRequest $request, $id)
     {
         $status_code = 200;
         $message = "updated successfully";
 
-        $category = Category::where([
+        $sub_category = SubCategory::where([
             'id' => $id,
             'deleted_at' => null
         ])->first();
 
-        if ($category) {
-            $category->update([
+        if ($sub_category) {
+            $sub_category->update([
                 'name' => $request['name']
             ]);
         } else {
             $status_code = 404;
-            $message = "category not found";
+            $message = "sub category not found";
         }
 
         return response()->json([
@@ -62,20 +62,19 @@ class CategoryController extends Controller
         $status_code = 200;
         $message = "deleted successfully";
 
-        $category = Category::where([
+        $sub_category = SubCategory::where([
             'id' => $id,
             'deleted_at' => null
         ])->first();
 
-        if ($category) {
-            $category->update([
+        if ($sub_category) {
+            $sub_category->update([
                 'deleted_at' => now()
             ]);
         } else {
             $status_code = 404;
-            $message = "category not found";
+            $message = "sub category not found";
         }
-
         return response()->json([
             'message' => $message
         ], $status_code);
