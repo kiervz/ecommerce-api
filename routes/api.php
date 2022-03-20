@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\SegmentController;
 
@@ -32,6 +33,8 @@ Route::group(['prefix' => 'auth'], function() {
 
 
 Route::group(['middleware' => 'auth:sanctum'], function() {
-    Route::apiResource('products', ProductController::class);
-    Route::apiResource('segments', SegmentController::class);
+    Route::apiResource('product', ProductController::class);
+    Route::get('segment/{id}/categories', [SegmentController::class, 'showCategoriesBySegmentId'])->name('segment.showCategoriesBySegmentId');
+    Route::apiResource('segment', SegmentController::class);
+    Route::apiResource('category', CategoryController::class);
 });

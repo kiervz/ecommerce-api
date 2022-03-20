@@ -12,7 +12,7 @@ class Category extends Model
     protected $fillable = [
         "name",
         "segment_id",
-        "is_deleted"
+        "deleted_at"
     ];
 
     public function segment()

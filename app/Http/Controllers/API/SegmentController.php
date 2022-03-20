@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Segment\SegmentRequest;
+use App\Models\Category;
 use App\Models\Segment;
 use Illuminate\Http\Request;
 
@@ -11,31 +12,25 @@ class SegmentController extends Controller
 {
     public function index()
     {
-        $status_code = 200;
-        $message = "retrieved successfully";
-
         $segments = Segment::select('id', 'name')
             ->where('deleted_at', null)
             ->paginate(10);
 
         return response()->json([
-            'message' => $message,
+            'message' => 'retrieved successfully',
             'data' => $segments
-        ], $status_code);
+        ], 200);
     }
 
     public function store(SegmentRequest $request)
     {
-        $status_code = 200;
-        $message = "added successfully";
-
         Segment::create([
             'name' => $request['name']
         ]);
 
         return response()->json([
-            'message' => $message
-        ], $status_code);
+            'message' => 'added successfully'
+        ], 200);
     }
 
     public function update(Request $request, $id)
@@ -83,6 +78,32 @@ class SegmentController extends Controller
 
         return response()->json([
             'message' => $message
+        ], $status_code);
+    }
+
+    public function showCategoriesBySegmentId($id)
+    {
+        $status_code = 200;
+        $message = "retrieved successfully";
+
+        $segment = Segment::where([
+            'id' => $id,
+            'deleted_at' => null
+        ])->first();
+
+        if (!$segment) {
+            $status_code = 404;
+            $message = "segment not found";
+        } else {
+            $categories = Category::select('id', 'name')->where([
+                'segment_id' => $segment['id'],
+                'deleted_at' => null
+            ])->paginate(10);
+        }
+
+        return response()->json([
+            'message' => $message,
+            'data' => $categories ?? null
         ], $status_code);
     }
 }

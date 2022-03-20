@@ -17,8 +17,8 @@ class CreateCategoriesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('segment_id');
-            $table->integer('is_deleted')->default(0);
             $table->timestamps();
+            $table->timestamps('deleted_at');
         });
     }
 
