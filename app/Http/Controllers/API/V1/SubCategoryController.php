@@ -1,30 +1,31 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProductDetailMasterRequest;
-use App\Models\ProductDetailMaster;
+use App\Http\Requests\V1\SubCategoryRequest;
 use Illuminate\Http\Request;
+use App\Models\SubCategory;
 
-class ProductDetailMasterController extends Controller
+class SubCategoryController extends Controller
 {
     public function index()
     {
-        $product_detail_masters = ProductDetailMaster::select('id', 'name')
+        $sub_categories = SubCategory::select('id', 'name', 'category_id')
             ->where('deleted_at', null)
             ->paginate(10);
 
         return response()->json([
-            'message' => 'retrieved successfully',
-            'data' => $product_detail_masters
+            'message' => 'retrieved succesfully',
+            'data' => $sub_categories
         ], 200);
     }
 
-    public function store(Request $request)
+    public function store(SubCategoryRequest $request)
     {
-        ProductDetailMaster::create([
-            'name' => $request['name']
+        SubCategory::create([
+            'name' => $request['name'],
+            'category_id' => $request['category_id']
         ]);
 
         return response()->json([
@@ -32,23 +33,23 @@ class ProductDetailMasterController extends Controller
         ], 200);
     }
 
-    public function update(ProductDetailMasterRequest $request, $id)
+    public function update(SubCategoryRequest $request, $id)
     {
         $status_code = 200;
         $message = "updated successfully";
 
-        $product_detail_master = ProductDetailMaster::where([
+        $sub_category = SubCategory::where([
             'id' => $id,
             'deleted_at' => null
         ])->first();
 
-        if ($product_detail_master) {
-            $product_detail_master->update([
+        if ($sub_category) {
+            $sub_category->update([
                 'name' => $request['name']
             ]);
         } else {
             $status_code = 404;
-            $message = "product detail master not found";
+            $message = "sub category not found";
         }
 
         return response()->json([
@@ -58,24 +59,22 @@ class ProductDetailMasterController extends Controller
 
     public function destroy($id)
     {
-
         $status_code = 200;
         $message = "deleted successfully";
 
-        $product_detail_master = ProductDetailMaster::where([
+        $sub_category = SubCategory::where([
             'id' => $id,
             'deleted_at' => null
         ])->first();
 
-        if ($product_detail_master) {
-            $product_detail_master->update([
+        if ($sub_category) {
+            $sub_category->update([
                 'deleted_at' => now()
             ]);
         } else {
             $status_code = 404;
-            $message = "product detail master not found";
+            $message = "sub category not found";
         }
-
         return response()->json([
             'message' => $message
         ], $status_code);

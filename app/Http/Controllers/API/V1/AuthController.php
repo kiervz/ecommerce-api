@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\V1;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginRequest;
-use App\Http\Requests\RegisterRequest;
-
+use App\Http\Requests\V1\LoginRequest;
+use App\Http\Requests\V1\RegisterRequest;
 use App\Models\Admin;
 use App\Models\Customer;
 use App\Models\User;

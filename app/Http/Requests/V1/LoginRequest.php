@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProductDetailMasterRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,14 +23,16 @@ class ProductDetailMasterRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->product_detail_master;
-        $method = $this->method();
-
         return [
-            'name' => $method == 'PUT' ? [
-                'required',
-                Rule::unique('product_detail_masters')->ignore($id)
-            ] : 'required|unique:product_detail_masters,name',
+            'username' => 'required|string',
+            'password' => 'required|string|min:8'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+           'username.required' => 'Username or email is required.'
         ];
     }
 }

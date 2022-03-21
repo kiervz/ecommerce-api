@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProductRequest;
+use App\Http\Requests\V1\ProductRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Product;

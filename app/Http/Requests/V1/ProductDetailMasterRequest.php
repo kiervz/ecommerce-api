@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class SegmentRequest extends FormRequest
+class ProductDetailMasterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +23,14 @@ class SegmentRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->segment;
+        $id = $this->product_detail_master;
         $method = $this->method();
 
         return [
             'name' => $method == 'PUT' ? [
                 'required',
-                Rule::unique('segments')->ignore($id)
-            ] : 'required|unique:segments,name',
+                Rule::unique('product_detail_masters')->ignore($id)
+            ] : 'required|unique:product_detail_masters,name',
         ];
     }
 }

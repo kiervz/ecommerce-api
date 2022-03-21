@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SegmentRequest;
+use App\Http\Requests\V1\SegmentRequest;
 use App\Models\Category;
 use App\Models\Segment;
 use Illuminate\Http\Request;
