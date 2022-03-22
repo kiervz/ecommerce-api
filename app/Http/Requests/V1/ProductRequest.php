@@ -31,7 +31,7 @@ class ProductRequest extends FormRequest
             'sku' => $method == 'PUT' ? [
                 'required',
                 Rule::unique('products')->ignore($id)
-            ] : 'required',
+            ] : 'required|unique:products,sku',
             'name' => 'required',
             'unit_price' => 'required|numeric',
             'discount' => 'required|numeric',
