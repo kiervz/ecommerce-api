@@ -26,6 +26,27 @@ class ProductController extends Controller
         ], $status_code);
     }
 
+    public function show($slug)
+    {
+        $status_code = 200;
+        $message = "success";
+
+        $product = Product::where([
+            'slug' => $slug,
+            'deleted_at' => null
+        ])->first();
+
+        if (!$product) {
+            $message = 'product not found.';
+            $status_code = 404;
+        }
+
+        return response()->json([
+            'message' => $message,
+            'data' => $product ?? null
+        ], $status_code);
+    }
+
     public function store(ProductRequest $request)
     {
         $status_code = 200;
