@@ -15,6 +15,7 @@ class Product extends Model
         "slug",
         "unit_price",
         "discount",
+        "actual_price",
         "stock",
         "description",
         "seller_id",

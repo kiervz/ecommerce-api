@@ -13,12 +13,37 @@ use App\Models\ProductImage;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $status_code = 200;
         $message = "retrieved successfully";
 
-        $products = Product::where('deleted_at', null)->paginate(10);
+        $sort = $request->get('sort');
+        $dir = $request->get('dir');
+        $search = $request->get('q');
+
+        $search_products = Product::where(function($query) use ($search) {
+            $query->where('slug', 'LIKE', "%$search%")
+                ->orWhere('name', 'LIKE', "%$search%")
+                ->orWhere('sku', 'LIKE', "%$search%")
+                ->orWhere('description', 'LIKE', "%$search%");
+            })->where('deleted_at', null);
+
+        if ($sort == null) {
+            $search_products->orderBy('discount', 'DESC');
+        } elseif ($sort == 'discount' && $dir == 'asc') {
+            $search_products->orderBy('discount', 'ASC');
+        } elseif ($sort == 'latest' && $dir == 'desc') {
+            $search_products->orderBy('created_at', 'DESC');
+        } elseif ($sort == 'latest' && $dir == 'asc') {
+            $search_products->orderBy('created_at', 'ASC');
+        } elseif ($sort == 'price' && $dir == 'desc') {
+            $search_products->orderBy('actual_price', 'DESC');
+        } elseif ($sort == 'price' && $dir == 'asc') {
+            $search_products->orderBy('actual_price', 'ASC');
+        }
+
+        $products = $search_products->paginate(10);
 
         return response()->json([
             'message' => $message,
@@ -52,7 +77,7 @@ class ProductController extends Controller
         $status_code = 200;
         $message = "added successfully";
 
-        Product::create([
+        $product = Product::create([
             'sku' => $request['sku'],
             'name' => $request['name'],
             'slug' => Str::slug($request['name']) . '-' . rand(100,999),
@@ -69,7 +94,7 @@ class ProductController extends Controller
 
         foreach ($request->product_details as $item) {
             ProductDetail::create([
-                'product_id' => $item['product_id'],
+                'product_id' => $product['id'],
                 'product_detail_master_id' => $item['product_detail_master_id'],
                 'value' => $item['value']
             ]);
@@ -77,7 +102,7 @@ class ProductController extends Controller
 
         foreach ($request->product_images as $item) {
             ProductImage::create([
-                'product_id' => $item['product_id'],
+                'product_id' => $product['id'],
                 'image' => $item['image']
             ]);
         }

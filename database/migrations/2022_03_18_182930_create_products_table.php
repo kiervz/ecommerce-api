@@ -18,8 +18,9 @@ class CreateProductsTable extends Migration
             $table->string('sku', 191);
             $table->string('name', 191);
             $table->string('slug', 191);
-            $table->decimal('unit_price', 7, 2);
+            $table->decimal('unit_price', 18, 2);
             $table->decimal('discount', 3, 2);
+            $table->decimal('actual_price', 18, 2);
             $table->integer('stock');
             $table->string('description', 191);
             $table->integer('seller_id');
