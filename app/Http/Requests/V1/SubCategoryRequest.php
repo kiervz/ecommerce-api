@@ -30,8 +30,12 @@ class SubCategoryRequest extends FormRequest
         return [
             'name' => $method == 'PUT' ? [
                 'required',
-                Rule::unique('categories')->ignore($id)
-            ] : 'required|unique:categories,name',
+                Rule::unique('sub_categories')->ignore($id)
+            ] : [
+                'required', Rule::unique('sub_categories')->where(function($query) {
+                    $query->where('category_id', '=', $this->category_id);
+                })
+            ],
             'category_id' => $method == 'PUT' ? '' : 'required'
         ];
     }
