@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\SegmentRequest;
+use App\Http\Resources\V1\SegmentResource;
 use App\Models\Category;
 use App\Models\Segment;
 use Illuminate\Http\Request;
@@ -16,10 +17,20 @@ class SegmentController extends Controller
             ->where('deleted_at', null)
             ->paginate(10);
 
+        return SegmentResource::collection($segments);
+    }
+
+    public function show($segment)
+    {
+        $segment = Segment::where([
+            'name' => $segment,
+            'deleted_at' => null
+        ])->first();
+
         return response()->json([
-            'message' => 'retrieved successfully',
-            'data' => $segments
-        ], 200);
+            'message' => 'success',
+            'response' => new SegmentResource($segment)
+        ]);
     }
 
     public function store(SegmentRequest $request)

@@ -14,10 +14,7 @@ class SubCategoryController extends Controller
     {
         $sub_categories = SubCategory::where('deleted_at', null)->paginate(10);
 
-        return response()->json([
-            'message' => 'retrieved succesfully',
-            'data' => SubCategoryResource::collection($sub_categories)
-        ], 200);
+        return SubCategoryResource::collection($sub_categories);
     }
 
     public function store(SubCategoryRequest $request)

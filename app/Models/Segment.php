@@ -23,4 +23,9 @@ class Segment extends Model
     {
         return $this->hasOne(Product::class);
     }
+
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
 }

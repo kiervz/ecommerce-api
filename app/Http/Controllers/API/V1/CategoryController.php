@@ -14,10 +14,7 @@ class CategoryController extends Controller
     {
         $categories = Category::where('deleted_at', null)->paginate(10);
 
-        return response()->json([
-            'message' => 'retrieved successfully',
-            'data' => CategoryResource::collection($categories)
-        ], 200);
+        return CategoryResource::collection($categories);
     }
 
     public function store(CategoryRequest $request)

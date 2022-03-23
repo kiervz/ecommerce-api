@@ -4,7 +4,7 @@ namespace App\Http\Resources\V1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryResource extends JsonResource
+class SegmentResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,8 +17,7 @@ class CategoryResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'segment' => $this->segment->name,
-            'sub_categories' => SubCategoryResource::collection($this->sub_categories)
+            'categories' => CategoryResource::collection($this->categories)
         ];
     }
 }

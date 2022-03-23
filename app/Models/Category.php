@@ -20,9 +20,14 @@ class Category extends Model
         return $this->belongsTo(Segment::class);
     }
 
-    public function subcategory()
+    public function sub_category()
     {
         return $this->hasOne(SubCategory::class);
+    }
+
+    public function sub_categories()
+    {
+        return $this->hasMany(SubCategory::class);
     }
 
     public function product()
