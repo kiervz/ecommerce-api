@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\ProductRequest;
+use App\Http\Resources\V1\ProductResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Product;
@@ -30,13 +31,13 @@ class ProductController extends Controller
             })->where('deleted_at', null);
 
         if ($sort == null) {
-            $search_products->orderBy('discount', 'DESC');
-        } elseif ($sort == 'discount' && $dir == 'asc') {
-            $search_products->orderBy('discount', 'ASC');
-        } elseif ($sort == 'latest' && $dir == 'desc') {
             $search_products->orderBy('created_at', 'DESC');
         } elseif ($sort == 'latest' && $dir == 'asc') {
             $search_products->orderBy('created_at', 'ASC');
+        } elseif ($sort == 'discount' && $dir == 'desc') {
+            $search_products->orderBy('discount', 'DESC');
+        } elseif ($sort == 'discount' && $dir == 'asc') {
+            $search_products->orderBy('discount', 'ASC');
         } elseif ($sort == 'price' && $dir == 'desc') {
             $search_products->orderBy('actual_price', 'DESC');
         } elseif ($sort == 'price' && $dir == 'asc') {
@@ -47,7 +48,7 @@ class ProductController extends Controller
 
         return response()->json([
             'message' => $message,
-            'data' => $products
+            'data' => ProductResource::collection($products)
         ], $status_code);
     }
 
