@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\SubCategoryRequest;
+use App\Http\Resources\V1\SubCategoryResource;
 use Illuminate\Http\Request;
 use App\Models\SubCategory;
 
@@ -11,13 +12,11 @@ class SubCategoryController extends Controller
 {
     public function index()
     {
-        $sub_categories = SubCategory::select('id', 'name', 'category_id')
-            ->where('deleted_at', null)
-            ->paginate(10);
+        $sub_categories = SubCategory::where('deleted_at', null)->paginate(10);
 
         return response()->json([
             'message' => 'retrieved succesfully',
-            'data' => $sub_categories
+            'data' => SubCategoryResource::collection($sub_categories)
         ], 200);
     }
 
