@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\V1\AuthController;
+use App\Http\Controllers\API\V1\BrandController;
 use App\Http\Controllers\API\V1\CategoryController;
 use App\Http\Controllers\API\V1\ProductController;
 use App\Http\Controllers\API\V1\ProductDetailMasterController;
@@ -43,5 +44,6 @@ Route::group(['prefix' => 'v1'], function() {
         Route::apiResource('category', CategoryController::class);
         Route::apiResource('sub-category', SubCategoryController::class);
         Route::apiResource('product-detail-master', ProductDetailMasterController::class);
+        Route::apiResource('brand', BrandController::class);
     });
 });
