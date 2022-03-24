@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\V1;
 
+use App\Models\Seller;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductResource extends JsonResource
@@ -22,8 +23,8 @@ class ProductResource extends JsonResource
             'discount' => $this->discount,
             'actual_price' => $this->actual_price,
             'stock' => $this->stock,
-            'seller' => $this->seller_id,
-            'brand' => $this->brand_id,
+            'seller' => new SellerResource($this->seller),
+            'brand' => new BrandResource($this->brand),
             'segment' => $this->segment->name,
             'category' => $this->category->name,
             'sub_ategory' => $this->sub_category->name,

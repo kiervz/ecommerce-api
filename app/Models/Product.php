@@ -50,4 +50,14 @@ class Product extends Model
     {
         return $this->hasMany(ProductDetail::class);
     }
+
+    public function seller()
+    {
+        return $this->hasOne(Seller::class, 'id', 'seller_id');
+    }
+
+    public function brand()
+    {
+        return $this->hasOne(Brand::class, 'id', 'brand_id');
+    }
 }
