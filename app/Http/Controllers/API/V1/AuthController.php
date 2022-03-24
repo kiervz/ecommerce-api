@@ -9,6 +9,7 @@ use App\Http\Requests\V1\LoginRequest;
 use App\Http\Requests\V1\RegisterRequest;
 use App\Models\Admin;
 use App\Models\Customer;
+use App\Models\Seller;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -49,7 +50,9 @@ class AuthController extends Controller
         if ($request->role_id === 1) {
             $user_info = new Admin();
             $user_info->is_verified = 0;
-        } else {
+        } else if ($request->role_id === 2) {
+            $user_info = new Seller();
+        } else if ($request->role_id === 3) {
             $user_info = new Customer();
         }
 

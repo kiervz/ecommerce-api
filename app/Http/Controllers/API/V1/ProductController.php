@@ -69,7 +69,7 @@ class ProductController extends Controller
 
         return response()->json([
             'message' => $message,
-            'data' => $product ?? null
+            'data' => $product ? new ProductResource($product) : null
         ], $status_code);
     }
 
