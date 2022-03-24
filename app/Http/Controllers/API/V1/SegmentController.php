@@ -22,15 +22,23 @@ class SegmentController extends Controller
 
     public function show($segment)
     {
+        $status_code = 200;
+        $message = "success";
+
         $segment = Segment::where([
             'name' => $segment,
             'deleted_at' => null
         ])->first();
 
+        if (!$segment) {
+            $message = 'segment not found.';
+            $status_code = 404;
+        }
+
         return response()->json([
-            'message' => 'success',
-            'response' => new SegmentResource($segment)
-        ]);
+            'message' => $message,
+            'data' => $segment ? new SegmentResource($segment) : null
+        ], $status_code);
     }
 
     public function store(SegmentRequest $request)
