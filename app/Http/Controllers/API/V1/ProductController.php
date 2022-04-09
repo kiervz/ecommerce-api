@@ -30,7 +30,7 @@ class ProductController extends Controller
                 ->orWhere('description', 'LIKE', "%$search%");
             })->where('deleted_at', null);
 
-        if ($sort == null) {
+        if ($sort == null || $sort == "") {
             $search_products->orderBy('created_at', 'DESC');
         } elseif ($sort == 'latest' && $dir == 'asc') {
             $search_products->orderBy('created_at', 'ASC');
@@ -46,10 +46,7 @@ class ProductController extends Controller
 
         $products = $search_products->paginate(10);
 
-        return response()->json([
-            'message' => $message,
-            'data' => ProductResource::collection($products)
-        ], $status_code);
+        return ProductResource::collection($products);
     }
 
     public function show($slug)

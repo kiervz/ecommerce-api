@@ -8,6 +8,7 @@ use App\Http\Controllers\API\V1\CategoryController;
 use App\Http\Controllers\API\V1\ProductController;
 use App\Http\Controllers\API\V1\ProductDetailMasterController;
 use App\Http\Controllers\API\V1\SegmentController;
+use App\Http\Controllers\API\V1\StoreController;
 use App\Http\Controllers\API\V1\SubCategoryController;
 
 /*
@@ -21,7 +22,7 @@ use App\Http\Controllers\API\V1\SubCategoryController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/v1/user', function (Request $request) {
     return $request->user();
 });
 
@@ -45,5 +46,6 @@ Route::group(['prefix' => 'v1'], function() {
         Route::apiResource('sub-category', SubCategoryController::class);
         Route::apiResource('product-detail-master', ProductDetailMasterController::class);
         Route::apiResource('brand', BrandController::class);
+        Route::apiResource('store', StoreController::class);
     });
 });
