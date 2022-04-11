@@ -26,7 +26,6 @@ class PurchaseOrderRequest extends FormRequest
         return [
             'seller_id' => 'required|integer',
             'customer_id' => 'required|integer',
-            'ref_no' => 'required|string',
             'po_date' => 'required',
             'payment_mode_id' => 'required|integer',
             'products' => 'required'

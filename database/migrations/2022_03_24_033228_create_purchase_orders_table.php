@@ -18,6 +18,7 @@ class CreatePurchaseOrdersTable extends Migration
             $table->integer('seller_id');
             $table->integer('customer_id');
             $table->string('ref_no', 30);
+            $table->string('po_number', 15);
             $table->date('po_date');
             $table->decimal('total_quantity', 12, 2);
             $table->decimal('total_amount', 12, 2);
