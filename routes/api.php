@@ -48,6 +48,7 @@ Route::group(['prefix' => 'v1'], function() {
         Route::apiResource('product-detail-master', ProductDetailMasterController::class);
         Route::apiResource('brand', BrandController::class);
         Route::apiResource('store', StoreController::class);
-        Route::apiResource('purchase-order', PurchaseOrderController::class);
+        Route::post('purchase-order', [PurchaseOrderController::class, 'store'])->name('purchase-order.store');
+        Route::put('purchase-order/status', [PurchaseOrderController::class, 'updateStatus'])->name('purchase-order.updateStatus');
     });
 });

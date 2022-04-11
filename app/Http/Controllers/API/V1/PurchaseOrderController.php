@@ -17,6 +17,7 @@ class PurchaseOrderController extends Controller
             'seller_id' => $request['seller_id'],
             'customer_id' => $request['customer_id'],
             'ref_no' => $request['ref_no'],
+            'po_number' => PurchaseOrder::latest()->first() ? str_pad(PurchaseOrder::latest()->first()->po_number + 1, 15, "0", STR_PAD_LEFT) : '000000000000001',
             'po_date' => $request['po_date'],
             'total_quamtity' => $request['total_quantity'],
             'payment_mode_id' => $request['payment_mode_id'],
@@ -54,5 +55,30 @@ class PurchaseOrderController extends Controller
         return response()->json([
             'message' => 'purchase order created successfully'
         ], 200);
+    }
+
+    public function updateStatus(Request $request)
+    {
+        $status_code = 200;
+        $message = "status updated successfully";
+
+        $po = PurchaseOrder::where([
+            'seller_id' => $request['seller_id'],
+            'po_number' => $request['po_number']
+        ])->first();
+
+        if (!$po) {
+            $status_code = 404;
+            $message = "purchase order not found";
+        } else {
+            $po->update([
+                'status' => $request['status'],
+                'payment_status' => 'O'
+            ]);
+        }
+
+        return response()->json([
+            'message' => $message
+        ], $status_code);
     }
 }
