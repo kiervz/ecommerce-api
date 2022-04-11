@@ -81,4 +81,29 @@ class PurchaseOrderController extends Controller
             'message' => $message
         ], $status_code);
     }
+
+    public function updatePaymentStatus(Request $request)
+    {
+
+        $status_code = 200;
+        $message = "payment status updated successfully";
+
+        $po = PurchaseOrder::where([
+            'seller_id' => $request['seller_id'],
+            'po_number' => $request['po_number']
+        ])->first();
+
+        if (!$po) {
+            $status_code = 404;
+            $message = "purchase order not found";
+        } else {
+            $po->update([
+                'payment_status' => $request['status']
+            ]);
+        }
+
+        return response()->json([
+            'message' => $message
+        ], $status_code);
+    }
 }

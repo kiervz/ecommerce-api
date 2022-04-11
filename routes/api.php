@@ -50,5 +50,6 @@ Route::group(['prefix' => 'v1'], function() {
         Route::apiResource('store', StoreController::class);
         Route::post('purchase-order', [PurchaseOrderController::class, 'store'])->name('purchase-order.store');
         Route::put('purchase-order/status', [PurchaseOrderController::class, 'updateStatus'])->name('purchase-order.updateStatus');
+        Route::put('purchase-order/payment-status', [PurchaseOrderController::class, 'updatePaymentStatus'])->name('purchase-order.updatePaymentStatus');
     });
 });
