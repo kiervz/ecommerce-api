@@ -15,6 +15,16 @@ class CreatePurchaseOrderItemsTable extends Migration
     {
         Schema::create('purchase_order_items', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('po_id');
+            $table->integer('product_id');
+            $table->string('sku', 50);
+            $table->string('name', 191);
+            $table->string('slug', 191);
+            $table->string('variety', 191);
+            $table->decimal('quantity', 12, 2);
+            $table->decimal('price', 12, 2);
+            $table->decimal('total_amount', 12, 2);
+            $table->string('unit', 50);
             $table->timestamps();
         });
     }
